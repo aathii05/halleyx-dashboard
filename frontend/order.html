@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<title>Place Your Order</title>
+
+<style>
+
+body{
+font-family:Arial;
+background:#f4f6f9;
+text-align:center;
+padding:40px;
+}
+
+.container{
+background:white;
+width:400px;
+margin:auto;
+padding:30px;
+border-radius:10px;
+box-shadow:0 4px 10px rgba(0,0,0,0.1);
+}
+
+input,select{
+width:90%;
+padding:10px;
+margin:10px;
+}
+
+button{
+padding:10px 20px;
+background:#2563eb;
+color:white;
+border:none;
+cursor:pointer;
+}
+
+.success{
+color:green;
+margin-top:20px;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h2>Customer Order</h2>
+
+<input id="firstName" placeholder="First Name">
+
+<input id="lastName" placeholder="Last Name">
+
+<input id="email" placeholder="Email">
+
+<select id="product">
+
+<option value="">Select Product</option>
+<option value="Laptop">Laptop</option>
+<option value="Phone">Phone</option>
+<option value="Headphones">Headphones</option>
+<option value="Keyboard">Keyboard</option>
+<option value="Mouse">Mouse</option>
+
+</select>
+
+<input id="quantity" placeholder="Quantity">
+
+<input id="price" placeholder="Unit Price">
+
+<button onclick="placeOrder()">Place Order</button>
+
+<p class="success" id="msg"></p>
+
+</div>
+
+<script>
+
+const API="http://localhost:8080/orders";
+
+async function placeOrder(){
+
+let order={
+
+firstName:firstName.value,
+lastName:lastName.value,
+email:email.value,
+product:product.value,
+quantity:parseInt(quantity.value),
+unitPrice:parseFloat(price.value)
+
+};
+
+await fetch(API,{
+method:"POST",
+headers:{
+"Content-Type":"application/json"
+},
+body:JSON.stringify(order)
+});
+
+document.getElementById("msg").innerText="Order Placed Successfully!";
+
+}
+
+</script>
+
+</body>
+
+</html>

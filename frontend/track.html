@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<title>Track Your Order</title>
+
+<style>
+
+body{
+font-family:Arial;
+background:#f4f6f9;
+text-align:center;
+padding:40px;
+}
+
+input{
+padding:10px;
+margin:10px;
+width:250px;
+}
+
+button{
+padding:10px 20px;
+cursor:pointer;
+}
+
+table{
+margin:auto;
+margin-top:30px;
+border-collapse:collapse;
+}
+
+th,td{
+padding:10px 20px;
+border:1px solid #ccc;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<h2>Track Your Order</h2>
+
+<input id="email" placeholder="Enter your email">
+
+<br>
+
+<button onclick="trackOrder()">Track Order</button>
+
+<table>
+
+<thead>
+<tr>
+<th>Order ID</th>
+<th>Product</th>
+<th>Total</th>
+<th>Status</th>
+</tr>
+</thead>
+
+<tbody id="result"></tbody>
+
+</table>
+
+<script>
+
+async function trackOrder(){
+
+let email=document.getElementById("email").value;
+
+let res=await fetch(
+"http://localhost:8080/orders/track?email="+email
+);
+
+let orders=await res.json();
+
+let table="";
+
+orders.forEach(o=>{
+
+table+=`
+<tr>
+<td>${o.id}</td>
+<td>${o.product}</td>
+<td>${o.totalAmount}</td>
+<td>${o.status}</td>
+</tr>
+`;
+
+});
+
+document.getElementById("result").innerHTML=table;
+
+}
+
+</script>
+
+</body>
+
+</html>
