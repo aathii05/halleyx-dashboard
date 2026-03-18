@@ -1,315 +1,136 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Halleyx · Dashboard</title>
-  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz@14..32&display=swap" rel="stylesheet">
-  <style>
-    * { box-sizing: border-box; margin: 0; }
-    body {
-      font-family: 'Inter', sans-serif;
-      background: #f8fafc;
-      display: flex;
-      transition: background 0.2s, color 0.2s;
-    }
-    body.dark { background: #0f172a; color: #e2e8f0; }
-    body.dark .sidebar { background: #111827; border-color: #1e293b; }
-    body.dark .card, body.dark .widget { background: #1e293b; border-color: #334155; }
-
-    .sidebar {
-      width: 260px;
-      background: white;
-      border-right: 1px solid #e9eef2;
-      height: 100vh;
-      padding: 28px 16px;
-      display: flex;
-      flex-direction: column;
-      gap: 24px;
-      position: sticky;
-      top: 0;
-    }
-    .sidebar h2 { font-weight: 600; font-size: 1.8rem; background: linear-gradient(135deg,#2563eb,#1e40af); -webkit-background-clip:text; -webkit-text-fill-color:transparent; margin-bottom: 16px; }
-    .sidebar button {
-      background: white;
-      border: 1px solid #dae2ec;
-      border-radius: 40px;
-      padding: 14px 18px;
-      font-weight: 500;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      cursor: pointer;
-      width: 100%;
-      transition: 0.15s;
-    }
-    .sidebar button:hover { background: #f1f5f9; }
-    body.dark .sidebar button { background: #1e293b; border-color: #3b4a5f; color: white; }
-
-    .main {
-      flex: 1;
-      padding: 32px 36px;
-      overflow-y: auto;
-      height: 100vh;
-    }
-    .header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 36px;
-      flex-wrap: wrap;
-      gap: 16px;
-    }
-    .header h1 { font-size: 2.4rem; font-weight: 600; background: linear-gradient(145deg, #1e293b, #2563eb); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-    .date-filter {
-      background: white;
-      border-radius: 60px;
-      border: 1px solid #e2e8f0;
-      padding: 6px;
-      display: flex;
-      align-items: center;
-    }
-    .date-filter select {
-      border: none;
-      background: transparent;
-      padding: 12px 24px;
-      font-size: 14px;
-      outline: none;
-      font-weight: 500;
-    }
-    body.dark .date-filter { background: #1e293b; border-color:#334155; color:white; }
-    .configure-btn {
-      background: #2563eb;
-      color: white;
-      border: none;
-      border-radius: 60px;
-      padding: 12px 32px;
-      font-weight: 600;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      cursor: pointer;
-      box-shadow: 0 4px 12px #2563eb70;
-    }
-
-    /* widget grid – 12 columns */
-    .widget-grid {
-      display: grid;
-      grid-template-columns: repeat(12, 1fr);
-      gap: 24px;
-      margin-top: 24px;
-    }
-    .widget {
-      background: white;
-      border-radius: 28px;
-      padding: 20px 22px;
-      box-shadow: 0 12px 30px -8px rgba(0,34,64,0.1);
-      border: 1px solid rgba(0,0,0,0.02);
-      grid-column: span 4; /* fallback, overridden by style */
-      transition: all 0.1s;
-    }
-    .widget-header {
-      display: flex;
-      justify-content: space-between;
-      margin-bottom: 18px;
-      font-weight: 600;
-      color: #0f172a;
-    }
-    body.dark .widget-header { color: white; }
-
-    .kpi-value { font-size: 2.8rem; font-weight: 700; margin: 10px 0 4px; }
-    canvas { max-height: 220px; width:100%!important; }
-    table { width:100%; border-collapse:collapse; font-size:14px; }
-    th,td { padding:8px; text-align:left; border-bottom:1px solid #eee; }
-    body.dark td { border-color:#334155; }
-
-    @media (max-width: 1024px) { .widget-grid { grid-template-columns: repeat(8,1fr); } }
-    @media (max-width: 640px) { .widget-grid { grid-template-columns: repeat(4,1fr); } }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Halleyx Dash | MNC Admin Dashboard</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;600;800&display=swap" rel="stylesheet">
+    
+    <!-- Ionicons -->
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <!-- SortableJS -->
+    <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
+    
+    <!-- Main Styles -->
+    <link rel="stylesheet" href="style.css">
 </head>
-<body>
-  <div class="sidebar">
-    <h2>Halleyx</h2>
-    <button onclick="toggleTheme()"><i class="fas fa-moon"></i> Dark / Light</button>
-    <button onclick="exportExcel()"><i class="fas fa-file-excel"></i> Export Excel</button>
-    <button onclick="logout()"><i class="fas fa-sign-out-alt"></i> Logout</button>
-  </div>
-  <div class="main">
-    <div class="header">
-      <h1>Dashboard</h1>
-      <div style="display:flex; gap:16px; flex-wrap:wrap;">
-        <div class="date-filter">
-          <select id="dateRange" onchange="applyDateFilter()">
-            <option value="all">All time</option><option value="today">Today</option>
-            <option value="7">Last 7 days</option><option value="30">Last 30 days</option>
-            <option value="90">Last 90 days</option>
-          </select>
-        </div>
-        <button class="configure-btn" onclick="window.location.href='config.html'"><i class="fas fa-cog"></i> Configure dashboard</button>
-      </div>
+<body class="dark-theme">
+    <div class="app-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo">
+                    <ion-icon name="grid-outline" class="logo-icon"></ion-icon>
+                    <span>HalleyxDash</span>
+                </div>
+            </div>
+            
+            <nav class="sidebar-nav">
+                <div class="nav-section">
+                    <p class="section-title">Add Widgets</p>
+                    <div class="widget-toolbox" id="widgetToolbox">
+                        <div class="toolbox-item" data-type="kpi-group">
+                            <ion-icon name="stats-chart-outline"></ion-icon>
+                            <span>KPI Summary</span>
+                        </div>
+                        <div class="toolbox-item" data-type="bar-chart">
+                            <ion-icon name="bar-chart-outline"></ion-icon>
+                            <span>Bar Chart</span>
+                        </div>
+                        <div class="toolbox-item" data-type="pie-chart">
+                            <ion-icon name="pie-chart-outline"></ion-icon>
+                            <span>Pie Chart</span>
+                        </div>
+                        <div class="toolbox-item" data-type="table">
+                            <ion-icon name="list-outline"></ion-icon>
+                            <span>Orders Table</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="nav-section">
+                    <p class="section-title">System Pages</p>
+                    <button onclick="window.location.href='order.html'" class="nav-btn secondary">
+                        <ion-icon name="add-circle-outline"></ion-icon>
+                        <span>New Order</span>
+                    </button>
+                    <button onclick="window.location.href='track.html'" class="nav-btn secondary">
+                        <ion-icon name="search-outline"></ion-icon>
+                        <span>Track Order</span>
+                    </button>
+                </div>
+
+                <div class="nav-section">
+                    <p class="section-title">Dashboard Actions</p>
+                    <button id="saveLayoutBtn" class="nav-btn secondary">
+                        <ion-icon name="save-outline"></ion-icon>
+                        <span>Save Layout</span>
+                    </button>
+                    <button id="resetLayoutBtn" class="nav-btn danger">
+                        <ion-icon name="refresh-outline"></ion-icon>
+                        <span>Reset Layout</span>
+                    </button>
+                    <button id="exportExcelBtn" class="nav-btn primary">
+                        <ion-icon name="download-outline"></ion-icon>
+                        <span>Export CSV</span>
+                    </button>
+                </div>
+            </nav>
+            
+            <div class="sidebar-footer">
+                <div class="user-profile">
+                    <div class="avatar">AD</div>
+                    <div class="user-info">
+                        <p class="user-name">Admin User</p>
+                        <p class="user-role">System Architect</p>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Dashboard Area -->
+        <main class="main-content">
+            <header class="dashboard-header">
+                <div class="header-left">
+                    <h1>MNC Enterprise Dashboard</h1>
+                </div>
+                <div class="header-right">
+                    <div class="status-indicator">
+                        <span class="pulse-dot"></span>
+                        <span id="apiStatusText">Initializing...</span>
+                    </div>
+                </div>
+            </header>
+
+            <div id="dashboardGrid" class="dashboard-grid">
+                <!-- Widgets will be injected here -->
+            </div>
+
+            <!-- Loading Overlay -->
+            <div id="loadingOverlay" class="loading-overlay hidden">
+                <div class="spinner"></div>
+                <p>Syncing Analytics...</p>
+            </div>
+        </main>
     </div>
-    <div id="widgetGrid" class="widget-grid"></div>
-  </div>
 
-  <script>
-    const API = 'http://localhost:8080/orders';
-    let orders = [];
-    let chartInstances = new Map();
+    <!-- Toast Notifications -->
+    <div id="toastContainer" class="toast-container"></div>
 
-    // Load orders (with demo fallback)
-    async function loadOrders() {
-      try {
-        const res = await fetch(API);
-        orders = await res.json();
-      } catch {
-        // demo orders
-        orders = [
-          { id:1, firstName:'John', lastName:'Doe', product:'Laptop', totalAmount:1200, status:'DELIVERED', orderDate:'2025-03-01' },
-          { id:2, firstName:'Anna', lastName:'Bell', product:'Phone', totalAmount:800, status:'PENDING', orderDate:'2025-03-10' },
-          { id:3, firstName:'Mike', lastName:'Ross', product:'Headphones', totalAmount:150, status:'DELIVERED', orderDate:'2025-03-15' },
-          { id:4, firstName:'Sara', lastName:'King', product:'Keyboard', totalAmount:220, status:'IN_PROGRESS', orderDate:'2025-03-20' }
-        ];
-      }
-    }
-
-    // Date filter logic
-    function getFilteredOrders() {
-      const range = document.getElementById('dateRange').value;
-      if (range === 'all' || !orders.length) return orders;
-      const days = parseInt(range);
-      if (isNaN(days)) return orders;
-      const cutoff = new Date();
-      cutoff.setDate(cutoff.getDate() - days);
-      return orders.filter(o => new Date(o.orderDate || Date.now()) >= cutoff);
-    }
-
-    // Render dashboard from saved layout
-    async function renderDashboard() {
-      await loadOrders();
-      const saved = localStorage.getItem('halleyx_layout');
-      let widgets = saved ? JSON.parse(saved) : [];
-      const grid = document.getElementById('widgetGrid');
-      grid.innerHTML = '';
-      
-      // Destroy old charts
-      chartInstances.forEach(c => c.destroy());
-      chartInstances.clear();
-
-      if (!widgets.length) {
-        grid.innerHTML = '<div style="grid-column:1/-1; text-align:center; padding:60px; background:#f9fcff; border-radius:60px;">No widgets configured. Click "Configure dashboard" to build.</div>';
-        return;
-      }
-
-      const filtered = getFilteredOrders();
-
-      for (let w of widgets) {
-        const el = document.createElement('div');
-        el.className = 'widget';
-        // set width in columns (default 4 if missing)
-        const colSpan = w.width || 4;
-        el.style.gridColumn = `span ${colSpan}`;
-        
-        // header with title
-        const header = document.createElement('div');
-        header.className = 'widget-header';
-        header.innerHTML = `<span>${w.title || 'Widget'}</span>`;
-        el.appendChild(header);
-
-        const content = document.createElement('div');
-        content.className = 'widget-content';
-        el.appendChild(content);
-        grid.appendChild(el);
-
-        // Render based on type
-        if (w.type === 'kpi') {
-          renderKpi(content, w, filtered);
-        } else if (w.type === 'bar' || w.type === 'line' || w.type === 'pie' || w.type === 'area') {
-          renderChart(content, w, filtered);
-        } else if (w.type === 'table') {
-          renderTable(content, w, filtered);
-        }
-      }
-    }
-
-    function renderKpi(container, widget, data) {
-      const metric = widget.config?.metric || 'orders';
-      let value = data.length;
-      let label = widget.title || 'KPI';
-      if (metric === 'revenue') {
-        value = data.reduce((acc, o) => acc + (o.totalAmount || 0), 0);
-      } else if (metric === 'pending') {
-        value = data.filter(o => o.status === 'PENDING').length;
-      } else if (metric === 'delivered') {
-        value = data.filter(o => o.status === 'DELIVERED').length;
-      }
-      container.innerHTML = `<div class="kpi-value">${value}</div><div class="kpi-label">${label}</div>`;
-    }
-
-    function renderChart(container, widget, data) {
-      const canvas = document.createElement('canvas');
-      container.appendChild(canvas);
-      const ctx = canvas.getContext('2d');
-      
-      // Default: use product as labels, totalAmount as values (simplified)
-      const labels = data.map(o => o.product).slice(0,8);
-      const values = data.map(o => o.totalAmount).slice(0,8);
-      
-      let chartType = widget.chartType || 'bar'; // widget may store chartType
-      if (widget.type === 'line') chartType = 'line';
-      else if (widget.type === 'pie') chartType = 'pie';
-      else if (widget.type === 'area') chartType = 'line'; // area as line with fill
-
-      const chart = new Chart(ctx, {
-        type: chartType,
-        data: {
-          labels: labels,
-          datasets: [{
-            label: widget.title || 'Chart',
-            data: values,
-            backgroundColor: widget.config?.color || '#2563eb',
-            fill: chartType === 'line' ? false : undefined
-          }]
-        }
-      });
-      chartInstances.set(widget.id, chart);
-    }
-
-    function renderTable(container, widget, data) {
-      const table = document.createElement('table');
-      const cols = widget.config?.columns || ['id','product','totalAmount','status'];
-      const headers = cols.map(c => `<th>${c}</th>`).join('');
-      table.innerHTML = `<thead><tr>${headers}</tr></thead><tbody></tbody>`;
-      const tbody = table.querySelector('tbody');
-      
-      data.slice(0, widget.config?.pageSize || 5).forEach(o => {
-        const row = document.createElement('tr');
-        cols.forEach(col => {
-          const td = document.createElement('td');
-          td.innerText = o[col] || '-';
-          row.appendChild(td);
-        });
-        tbody.appendChild(row);
-      });
-      container.appendChild(table);
-    }
-
-    function toggleTheme() { document.body.classList.toggle('dark'); }
-    function exportExcel() {
-      let csv = "ID,Product,Total,Status\n";
-      orders.forEach(o => csv += `${o.id},${o.product},${o.totalAmount},${o.status}\n`);
-      const blob = new Blob([csv], { type: 'text/csv' });
-      const a = document.createElement('a');
-      a.href = URL.createObjectURL(blob);
-      a.download = 'orders.csv';
-      a.click();
-    }
-    function logout() { localStorage.removeItem('logged'); window.location='login.html'; }
-    function applyDateFilter() { renderDashboard(); }
-
-    renderDashboard();
-    setInterval(renderDashboard, 10000); // live update
-  </script>
+    <!-- Application Scripts -->
+    <script src="utils.js"></script>
+    <script src="api.js"></script>
+    <script src="charts.js"></script>
+    <script src="widgets.js"></script>
+    <script src="app.js"></script>
 </body>
 </html>

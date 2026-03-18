@@ -1,255 +1,124 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Halleyx · Create Order</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz@14..32&display=swap" rel="stylesheet">
-  <style>
-    * { box-sizing: border-box; margin: 0; }
-    body {
-      font-family: 'Inter', sans-serif;
-      background: #f3f6fc;
-      display: flex;
-      justify-content: center;
-      padding: 30px 20px;
-    }
-    .order-container {
-      max-width: 800px;
-      width: 100%;
-      background: white;
-      border-radius: 40px;
-      box-shadow: 0 20px 35px -8px rgba(0,34,64,0.2);
-      padding: 40px;
-    }
-    h2 {
-      font-size: 32px;
-      font-weight: 600;
-      background: linear-gradient(145deg, #1e293b, #2563eb);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      margin-bottom: 30px;
-    }
-    .form-section {
-      background: #f8fafc;
-      border-radius: 24px;
-      padding: 24px;
-      margin-bottom: 32px;
-    }
-    .form-section h3 {
-      font-size: 18px;
-      margin-bottom: 20px;
-      color: #0f172a;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-    .grid-2 {
-      display: grid;
-      grid-template-columns: repeat(2,1fr);
-      gap: 16px 20px;
-    }
-    .field {
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-    }
-    .field label {
-      font-size: 13px;
-      font-weight: 600;
-      color: #334155;
-      text-transform: uppercase;
-      letter-spacing: 0.3px;
-    }
-    .field input, .field select {
-      background: white;
-      border: 1px solid #e2e8f0;
-      border-radius: 16px;
-      padding: 12px 16px;
-      font-size: 15px;
-      outline: none;
-      transition: 0.15s;
-    }
-    .field input:focus, .field select:focus {
-      border-color: #2563eb;
-      box-shadow: 0 0 0 3px rgba(37,99,235,0.2);
-    }
-    .field .error {
-      color: #dc2626;
-      font-size: 12px;
-      margin-top: 4px;
-      display: none;
-    }
-    .total-row {
-      background: #eef2ff;
-      border-radius: 20px;
-      padding: 16px 24px;
-      display: flex;
-      justify-content: space-between;
-      font-weight: 600;
-      font-size: 20px;
-      margin: 20px 0;
-    }
-    .actions {
-      display: flex;
-      gap: 16px;
-      justify-content: flex-end;
-    }
-    .btn-primary {
-      background: #2563eb;
-      color: white;
-      border: none;
-      padding: 16px 32px;
-      border-radius: 40px;
-      font-weight: 600;
-      cursor: pointer;
-      transition: 0.15s;
-      box-shadow: 0 4px 12px #2563eb50;
-    }
-    .btn-primary:hover { background: #1d4ed8; }
-    .btn-secondary {
-      background: white;
-      border: 1px solid #cbd5e1;
-      padding: 16px 32px;
-      border-radius: 40px;
-      font-weight: 600;
-      cursor: pointer;
-    }
-    .btn-secondary:hover { background: #f1f5f9; }
-    .success-msg {
-      background: #22c55e;
-      color: white;
-      border-radius: 40px;
-      padding: 16px;
-      text-align: center;
-      margin-top: 24px;
-      display: none;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Halleyx · Create Custom Order</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --bg-primary: #0a0c10;
+            --bg-secondary: #161b22;
+            --bg-tertiary: #21262d;
+            --accent-primary: #58a6ff;
+            --text-primary: #f0f6fc;
+            --text-secondary: #8b949e;
+            --border-color: rgba(240, 246, 252, 0.1);
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            display: flex;
+            justify-content: center;
+            padding: 40px 20px;
+            margin: 0;
+        }
+        .form-container {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 24px;
+            padding: 40px;
+            width: 100%;
+            max-width: 800px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+        }
+        h2 { font-size: 1.75rem; margin-bottom: 32px; color: var(--accent-primary); }
+        .form-section { margin-bottom: 32px; background: rgba(255,255,255,0.02); padding: 24px; border-radius: 16px; }
+        .form-section h3 { font-size: 1rem; color: var(--text-secondary); margin-bottom: 20px; text-transform: uppercase; letter-spacing: 1px; }
+        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        .field { display: flex; flex-direction: column; gap: 8px; }
+        label { font-size: 0.85rem; font-weight: 600; color: var(--text-secondary); }
+        input, select {
+            background: var(--bg-primary);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 12px 16px;
+            color: white;
+            outline: none;
+            transition: 0.2s;
+        }
+        input:focus, select:focus { border-color: var(--accent-primary); }
+        .full { grid-column: span 2; }
+        .footer { display: flex; justify-content: flex-end; gap: 16px; margin-top: 24px; }
+        .btn { padding: 12px 32px; border-radius: 8px; font-weight: 700; cursor: pointer; border: none; transition: 0.2s; }
+        .btn-secondary { background: transparent; color: var(--text-secondary); border: 1px solid var(--border-color); }
+        .btn-primary { background: var(--accent-primary); color: #0a0c10; }
+        .btn:hover { transform: translateY(-2px); opacity: 0.9; }
+    </style>
 </head>
 <body>
-  <div class="order-container">
-    <h2> Create customer order</h2>
-
-    <div class="form-section">
-      <h3> Customer information</h3>
-      <div class="grid-2">
-        <div class="field"><label>First name *</label><input id="firstName" value="John"></div>
-        <div class="field"><label>Last name *</label><input id="lastName" value="Doe"></div>
-        <div class="field"><label>Email *</label><input id="email" value="john@example.com"></div>
-        <div class="field"><label>Phone *</label><input id="phone" value="+1 555 123456"></div>
-        <div class="field" style="grid-column:span 2"><label>Street address *</label><input id="street" value="123 Main St"></div>
-        <div class="field"><label>City *</label><input id="city" value="New York"></div>
-        <div class="field"><label>State / Province *</label><input id="state" value="NY"></div>
-        <div class="field"><label>Postal code *</label><input id="zip" value="10001"></div>
-        <div class="field" style="grid-column:span 2"><label>Country *</label>
-          <select id="country">
-            <option value="USA" selected>United States</option>
-            <option value="CAN">Canada</option>
-            <option value="AUS">Australia</option>
-            <option value="SGP">Singapore</option>
-            <option value="HKG">Hong Kong</option>
-          </select>
+    <div class="form-container">
+        <h2><i class="fas fa-plus-circle"></i> Create New Order</h2>
+        
+        <div class="form-section">
+            <h3>Customer Details</h3>
+            <div class="grid">
+                <div class="field"><label>First Name</label><input id="firstName" value="John"></div>
+                <div class="field"><label>Last Name</label><input id="lastName" value="Doe"></div>
+                <div class="field full"><label>Email Address</label><input id="email" value="john.doe@mnc.com"></div>
+            </div>
         </div>
-      </div>
+
+        <div class="form-section">
+            <h3>Order Details</h3>
+            <div class="grid">
+                <div class="field full">
+                    <label>Select Product</label>
+                    <select id="product">
+                        <option value="Fiber Internet 1 Gbps">Fiber Internet 1 Gbps</option>
+                        <option value="5G Unlimited Mobile Plan">5G Unlimited Mobile Plan</option>
+                        <option value="Business Internet 500 Mbps">Business Internet 500 Mbps</option>
+                    </select>
+                </div>
+                <div class="field"><label>Quantity</label><input id="quantity" type="number" value="1"></div>
+                <div class="field"><label>Unit Price ($)</label><input id="price" type="number" value="89.99"></div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <button class="btn btn-secondary" onclick="window.location.href='index.html'">Cancel</button>
+            <button class="btn btn-primary" onclick="submitOrder()">Place Order</button>
+        </div>
     </div>
 
-    <div class="form-section">
-      <h3> Order information</h3>
-      <div class="grid-2">
-        <div class="field" style="grid-column:span 2"><label>Product *</label>
-          <select id="product">
-            <option value="Fiber Internet 300 Mbps">Fiber Internet 300 Mbps</option>
-            <option value="5G Unlimited Mobile Plan">5G Unlimited Mobile Plan</option>
-            <option value="Fiber Internet 1 Gbps">Fiber Internet 1 Gbps</option>
-            <option value="Business Internet 500 Mbps">Business Internet 500 Mbps</option>
-            <option value="VoIP Corporate Package">VoIP Corporate Package</option>
-          </select>
-        </div>
-        <div class="field"><label>Quantity *</label><input id="quantity" type="number" min="1" value="1"></div>
-        <div class="field"><label>Unit price ($) *</label><input id="price" type="number" min="0" step="0.01" value="99.99"></div>
-        <div class="field"><label>Status *</label>
-          <select id="status">
-            <option value="PENDING" selected>Pending</option>
-            <option value="IN_PROGRESS">In progress</option>
-            <option value="COMPLETED">Completed</option>
-          </select>
-        </div>
-        <div class="field"><label>Created by *</label>
-          <select id="createdBy">
-            <option value="Mr. Michael Harris">Mr. Michael Harris</option>
-            <option value="Mr. Ryan Cooper">Mr. Ryan Cooper</option>
-            <option value="Ms. Olivia Carter">Ms. Olivia Carter</option>
-            <option value="Mr. Lucas Martin">Mr. Lucas Martin</option>
-          </select>
-        </div>
-      </div>
-      <div class="total-row">
-        <span>Total amount</span>
-        <span id="totalDisplay">$0.00</span>
-      </div>
-    </div>
+    <script>
+        async function submitOrder() {
+            const order = {
+                firstName: document.getElementById('firstName').value,
+                lastName: document.getElementById('lastName').value,
+                email: document.getElementById('email').value,
+                product: document.getElementById('product').value,
+                quantity: parseInt(document.getElementById('quantity').value),
+                unitPrice: parseFloat(document.getElementById('price').value),
+                totalAmount: (document.getElementById('quantity').value * document.getElementById('price').value),
+                status: 'PENDING'
+            };
 
-    <div class="actions">
-      <button class="btn-secondary" onclick="window.location.href='index.html'">Cancel</button>
-      <button class="btn-primary" onclick="placeOrder()">Submit order</button>
-    </div>
-    <div id="successMsg" class="success-msg"> Order placed successfully!</div>
-  </div>
-
-  <script>
-    const quantityEl = document.getElementById('quantity');
-    const priceEl = document.getElementById('price');
-    const totalDisplay = document.getElementById('totalDisplay');
-
-    function updateTotal() {
-      const q = parseInt(quantityEl.value) || 1;
-      const p = parseFloat(priceEl.value) || 0;
-      totalDisplay.innerText = '$' + (q * p).toFixed(2);
-    }
-    quantityEl.addEventListener('input', updateTotal);
-    priceEl.addEventListener('input', updateTotal);
-    updateTotal();
-
-    async function placeOrder() {
-      // basic required check (add more as needed)
-      const required = ['firstName','lastName','email','phone','street','city','state','zip','product','quantity','price','createdBy'];
-      for (let id of required) {
-        const el = document.getElementById(id);
-        if (!el.value) { alert('Please fill all mandatory fields'); return; }
-      }
-
-      const order = {
-        firstName: firstName.value,
-        lastName: lastName.value,
-        email: email.value,
-        phone: phone.value,
-        street: street.value,
-        city: city.value,
-        state: state.value,
-        postalCode: zip.value,
-        country: country.value,
-        product: product.value,
-        quantity: parseInt(quantity.value),
-        unitPrice: parseFloat(price.value),
-        totalAmount: parseFloat((quantity.value * price.value).toFixed(2)),
-        status: status.value,
-        createdBy: createdBy.value
-      };
-
-      try {
-        await fetch('http://localhost:8080/orders', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(order)
-        });
-        document.getElementById('successMsg').style.display = 'block';
-        setTimeout(() => window.location.href = 'index.html', 1200);
-      } catch (err) {
-        alert('Order submitted (demo) – ' + JSON.stringify(order));
-        window.location.href = 'index.html';
-      }
-    }
-  </script>
+            try {
+                await fetch('http://localhost:8080/orders', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(order)
+                });
+                alert('Order created successfully!');
+                window.location.href = 'index.html';
+            } catch (err) {
+                alert('Mock success: ' + JSON.stringify(order));
+                window.location.href = 'index.html';
+            }
+        }
+    </script>
 </body>
 </html>
