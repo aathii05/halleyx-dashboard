@@ -1,0 +1,38 @@
+services:
+  db:
+    image: mysql:8.0
+    container_name: halleyx-db
+    environment:
+      MYSQL_DATABASE: halleyx_dashboard
+      MYSQL_ROOT_PASSWORD: root123
+    ports:
+      - "3306:3306"
+    healthcheck:
+      test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost"]
+      timeout: 20s
+      retries: 10
+
+  backend:
+    build: 
+      context: ./backend/dashborad2
+      dockerfile: Dockerfile
+    container_name: halleyx-backend
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/halleyx_dashboard
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: root123
+    depends_on:
+      db:
+        condition: service_healthy
+
+  frontend:
+    image: nginx:alpine
+    container_name: halleyx-frontend
+    volumes:
+      - ./frontend:/usr/share/nginx/html
+    ports:
+      - "80:80"
+    depends_on:
+      - backend

@@ -4,7 +4,10 @@
  */
 
 const API_CONFIG = {
-    BASE_URL: 'http://localhost:8080/orders',
+    // Replace the production URL with your actual deployed backend URL
+    BASE_URL: (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')
+        ? 'http://localhost:8080/orders'
+        : 'https://halleyx-backend.onrender.com/orders', 
     TIMEOUT: 5000
 };
 
