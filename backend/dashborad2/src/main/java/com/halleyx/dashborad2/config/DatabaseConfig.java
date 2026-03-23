@@ -41,13 +41,26 @@ public class DatabaseConfig {
                     username = userInfo;
                 }
 
+                String host = dbUri.getHost();
+                if (host == null || host.isEmpty()) {
+                    // Fallback for hostnames with underscores or other URI-unfriendly chars
+                    String authority = dbUri.getAuthority();
+                    if (authority != null) {
+                        if (authority.contains("@")) {
+                            authority = authority.split("@")[1];
+                        }
+                        host = authority.split(":")[0];
+                    }
+                }
+
                 int port = dbUri.getPort();
                 String portStr = (port == -1) ? "5432" : String.valueOf(port);
                 String dbName = dbUri.getPath();
 
-                String jdbcUrl = "jdbc:postgresql://" + dbUri.getHost() + ":" + portStr + dbName;
+                String jdbcUrl = "jdbc:postgresql://" + host + ":" + portStr + dbName;
                 
-                logger.info("Configuring PostgreSQL DataSource with URL: {}", jdbcUrl);
+                logger.info("Configuring PostgreSQL DataSource with URL: {}", jdbcUrl.replaceAll(":.*@", ":****@"));
+
 
                 return DataSourceBuilder.create()
                         .url(jdbcUrl)
