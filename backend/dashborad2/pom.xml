@@ -43,6 +43,14 @@ https://maven.apache.org/xsd/maven-4.0.0.xsd">
 <scope>runtime</scope>
 </dependency>
 
+<!-- PostgreSQL Driver for Render -->
+<dependency>
+<groupId>org.postgresql</groupId>
+<artifactId>postgresql</artifactId>
+<scope>runtime</scope>
+</dependency>
+
+
 <!-- Swagger API Docs -->
 <dependency>
 <groupId>org.springdoc</groupId>
